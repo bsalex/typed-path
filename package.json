@@ -4,9 +4,13 @@
   "main": "index.ts",
   "repository": {},
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
   },
+  "files": [
+    "LICENSE",
+    "index.ts"
+  ],
   "scripts": {
     "test": "mocha --require ts-node/register index.spec.ts"
   },
