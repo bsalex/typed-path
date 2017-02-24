@@ -1,14 +1,17 @@
 {
   "name": "typed-path",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "index.js",
   "repository": {},
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {},
   "files": [
     "LICENSE",
-    "index.ts"
+    "index.ts",
+    "index.js",
+    "index.js.map",
+    "index.d.ts"
   ],
   "scripts": {
     "test": "mocha --require ts-node/register index.spec.ts",
