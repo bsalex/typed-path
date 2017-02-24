@@ -5,9 +5,7 @@
   "repository": {},
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
   "license": "Apache-2.0",
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "files": [
     "LICENSE",
     "index.ts"
@@ -25,6 +23,7 @@
     "husky": "^0.13.1",
     "mocha": "^3.2.0",
     "ts-node": "^2.1.0",
-    "tslint": "^4.4.2"
+    "tslint": "^4.4.2",
+    "typescript": "^2.2.1"
   }
 }
