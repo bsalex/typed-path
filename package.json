@@ -1,8 +1,12 @@
 {
   "name": "typed-path",
   "version": "1.0.1",
+  "description": "Type safe object string paths for typescript.",
   "main": "index.js",
-  "repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bsalex/typed-path.git"
+  },
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {},
