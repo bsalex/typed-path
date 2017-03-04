@@ -4,7 +4,7 @@
 
 ## Problem
 
-Types are lost when string pathes are used in typescript.  
+Types are lost when string paths are used in typescript.  
 I.e. `_.get, _.map, _.set, R.pluck` from libraries like [lodash](https://lodash.com), [ramda](http://ramdajs.com/).  
 It makes those methods dangerous in case of refactoring, the same as JavaScript.  
 
@@ -16,7 +16,7 @@ It makes those methods dangerous in case of refactoring, the same as JavaScript.
 
 ### Errors
 
-With `typed-path` typescript can check pathes and warns you about errors.
+With `typed-path` typescript can check paths and warns you about errors.
 
 ![](http://res.cloudinary.com/daren64mz/image/upload/v1487457505/tp-refactoring_p4byr3.gif)
 
