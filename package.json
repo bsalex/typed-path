@@ -1,6 +1,6 @@
 {
   "name": "typed-path",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Type safe object string paths for typescript.",
   "main": "index.js",
   "repository": {
@@ -10,6 +10,15 @@
   "author": "Oleksandr Beshchuk <bs.alex.mail@gmail.com>",
   "license": "Apache-2.0",
   "dependencies": {},
+  "keywords": [
+    "lodash",
+    "underscore",
+    "typescript",
+    "path",
+    "types",
+    "type",
+    "string"
+  ],
   "files": [
     "LICENSE",
     "index.ts",
