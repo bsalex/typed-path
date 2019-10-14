@@ -1,2 +1,5 @@
 .vscode
 node_modules
+*.map
+*.js
+*.d.ts
