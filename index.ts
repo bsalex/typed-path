@@ -1,8 +1,8 @@
-type TypedPathNode<T> = {
+export type TypedPathNode<T> = {
     $path: string;
 };
 
-type TypedPathFunction<T> = (...args: any[]) => T;
+export type TypedPathFunction<T> = (...args: any[]) => T;
 
 export type TypedPathWrapper<T> = (T extends Array<infer Z>
     ? {
