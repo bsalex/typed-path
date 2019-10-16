@@ -1,6 +1,6 @@
 {
   "name": "typed-path",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Type safe object string paths for typescript.",
   "main": "index.js",
   "repository": {
@@ -30,6 +30,7 @@
     "test": "mocha --require ts-node/register index.spec.ts",
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
     "prepush": "yarn lint && yarn build && git diff --exit-code",
+    "prepare": "yarn test && yarn build",
     "build": "tsc"
   },
   "devDependencies": {
