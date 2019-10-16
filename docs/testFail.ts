@@ -1,7 +1,12 @@
+import {typedPath as tp} from '../index';
+
 type TestType = {
     a: {
+        testFunc: () => { result: string },
         b: {
+            arrayOfArrays: string[][]
             c: number;
+            f: { test: string, blah: { path?: string }, arr: string[] }[];
         }
     }
 };
@@ -10,7 +15,29 @@ function getField(path: string, object: any) {
     return 'Here should be some logic to get field by path';
 }
 
-const testObject: TestType = {a: {b: {c: 5}}};
-const field = getField('a.b.c', testObject); // <- Look! No error and type protection here!
+const testObject: TestType = {
+    a: {
+        b: {
+            arrayOfArrays: [['hi']],
+            c: 5,
+            f: [{test: 'tes123t', blah: {path: '123123'}, arr: ['tt']}]
+        }
+    }
+};
+
+// Look! No error and type protection here!
+const field = getField('a.b.c', testObject);
+
+// f is an array you cant access it directly
+console.log(tp<TestType>().a.b.f.blah.$path);
+
+// f is not an array of arrays just a plain string array so double accessor fails
+console.log(tp<TestType>().a.b.f[0][0].$path);
+
+// a is not a func
+console.log(tp<TestType>().a().$path);
+
+// bad is not a field in the function return type
+console.log(tp<TestType>().a.testFunc.bad);
 
 export default TestType;
