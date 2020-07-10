@@ -1,5 +1,8 @@
+export type TypedPathKey = string | symbol | number;
+
 export type TypedPathNode<T> = {
     $path: string;
+    $raw: TypedPathKey[];
 };
 
 export type TypedPathFunction<T> = (...args: any[]) => T;
@@ -39,9 +42,13 @@ function pathToString(path: string[]): string {
 
 export function typedPath<T>(path: string[] = []): TypedPathWrapper<T> {
     return <TypedPathWrapper<T>>new Proxy({}, {
-        get(target: T, name: string | symbol | number) {
+        get(target: T, name: TypedPathKey) {
             if (name === '$path') {
                 return pathToString(path);
+            }
+
+            if (name === '$raw') {
+                return path;
             }
 
             if (toStringMethods.includes(name)) {
