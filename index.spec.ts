@@ -1,6 +1,8 @@
 import {expect} from 'chai';
 import {typedPath as tp, typedPath} from './index';
 
+const sym = Symbol("SomeSymbol");
+
 type TestType = {
     a: {
         testFunc: () => { result: string },
@@ -8,6 +10,9 @@ type TestType = {
             arrayOfArrays: string[][]
             c: number;
             f: { test: string, blah: { path?: string }, arr: string[] }[];
+        }
+        [sym]: {
+            g: string,
         }
     }
 };
@@ -41,6 +46,11 @@ describe('Typed path', () => {
     it('should get function path', () => {
         expect(tp<TestType>().a.testFunc.$path).to.equal('a.testFunc');
         expect(tp<TestType>().a.testFunc.$raw).to.deep.equal(['a', 'testFunc']);
+    });
+
+    it('should get path with symbol', () => {
+        expect(tp<TestType>().a[sym].g.$path).to.equal('a.Symbol(SomeSymbol).g');
+        expect(tp<TestType>().a[sym].g.$raw).to.deep.equal(['a', 'Symbol(SomeSymbol)', 'g']);
     });
 
     it('should get path for toString()', () => {
