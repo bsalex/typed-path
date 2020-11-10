@@ -17,8 +17,8 @@ type TestType = {
     }
 };
 
-const testExtendedHandlers = {
-    $abs: (path: string[]) => typedPath<TestType, typeof testExtendedHandlers>(['', ...path], testExtendedHandlers),
+const testAdditionalHandlers = {
+    $abs: (path: string[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
     $url: (path: string[]) => path.join('/')
 }
 
@@ -67,10 +67,10 @@ describe('Typed path', () => {
     });
 
     it('should work with extended handlers', () => {
-        expect(tp<TestType, typeof testExtendedHandlers>([], testExtendedHandlers).a.b.c.$url).to.equal('a/b/c');
+        expect(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$url).to.equal('a/b/c');
     })
 
     it('should work with chained extended handlers', () => {
-        expect(tp<TestType, typeof testExtendedHandlers>([], testExtendedHandlers).a.b.c.$abs.$url).to.equal('/a/b/c');
+        expect(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).to.equal('/a/b/c');
     })
 });
