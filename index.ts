@@ -48,11 +48,8 @@ export function typedPath<T, K extends TypedPathHandlersConfig = Record<never, n
         get(target: T, name: TypedPathKey) {
             const handlersConfig: TypedPathHandlersConfig = { ...(additionalHandlers ?? {}), ...defaultHandlersConfig };
 
-            const keys: (keyof typeof handlersConfig)[] = Object.keys(handlersConfig);
-            for (const key of keys) {
-                if (key === name) {
-                    return handlersConfig[key](path, additionalHandlers);
-                }
+            if (handlersConfig.hasOwnProperty(name)) {
+                return handlersConfig[name as any](path, additionalHandlers);
             }
 
             return typedPath([...path, name.toString()], additionalHandlers);
