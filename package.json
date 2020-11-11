@@ -1,6 +1,6 @@
 {
   "name": "typed-path",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "Type safe object string paths for typescript.",
   "main": "index.js",
   "repository": {
@@ -39,8 +39,8 @@
     "chai": "^3.5.0",
     "husky": "^0.13.1",
     "mocha": "^6.2.0",
-    "ts-node": "8.3.0",
+    "ts-node": "^9.0.0",
     "tslint": "^4.4.2",
-    "typescript": "3.6.4"
+    "typescript": "^4.0.5"
   }
 }

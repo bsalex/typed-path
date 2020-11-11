@@ -20,18 +20,47 @@ With `typed-path` typescript can check paths and warns you about errors.
 
 ![](http://res.cloudinary.com/daren64mz/image/upload/v1487457505/tp-refactoring_p4byr3.gif)
 
-Also you can get access to the path string using `$path` special field. [@m-abboud](https://github.com/m-abboud)
+#### .$path
+[@m-abboud](https://github.com/m-abboud)  
+Also you can get access to the path string using `$path` special field. 
 
 Like this:
 ```js
     console.log(tp<TestType>().a.b.c.d.$path); // this will output "a.b.c.d"
 ```
 
-If you need a raw path, which is of type `string[]` - you can get it using `$raw` special field. [dcbrwn](https://github.com/dcbrwn)
+#### .$raw
+[@dcbrwn](https://github.com/dcbrwn)  
+If you need a raw path, which is of type `string[]` - you can get it using `$raw` special field. 
 ```js
     console.log(tp<TestType>().a.b.c.d.$raw); // this will output ["a", "b", "c", "d"]
 ```
 
+#### Additional handlers 
+[@nick-lvov-dev](https://github.com/nick-lvov-dev)
+
+You can extend path handlers functionality using additional handlers:
+
+```js
+const testAdditionalHandlers = {
+    $url: (path: string[]) => path.join('/')
+}
+
+console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$url); // this will output "a/b/c"
+```
+
+The additional handlers are also chainable:
+
+```js
+const testAdditionalHandlers = {
+    $abs: (path: string[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
+    $url: (path: string[]) => path.join('/')
+}
+
+console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url); // this will output "/a/b/c"
+```
+
+--- 
 
 ### Suggestions
 
