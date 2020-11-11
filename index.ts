@@ -43,16 +43,22 @@ export type TypedPathWrapper<T, TPH extends TypedPathHandlers<Record<never, neve
         }
     ) & TypedPathHandlers<TPH>;
 
-export function typedPath<T, K extends TypedPathHandlersConfig = Record<never, never>>(path: string[] = [], additionalHandlers?: K): TypedPathWrapper<T, K & typeof defaultHandlersConfig> {
+export function typedPath<T, K extends TypedPathHandlersConfig = Record<never, never>>(additionalHandlers?: K, path: string[] = [], defaultsApplied: boolean = false): TypedPathWrapper<T, K & typeof defaultHandlersConfig> {
     return <TypedPathWrapper<T, K & typeof defaultHandlersConfig>>new Proxy({}, {
         get(target: T, name: TypedPathKey) {
-            const handlersConfig: TypedPathHandlersConfig = { ...(additionalHandlers ?? {}), ...defaultHandlersConfig };
+            let handlersConfig: TypedPathHandlersConfig;
+
+            if (defaultsApplied) {
+                handlersConfig = additionalHandlers;
+            } else {
+                handlersConfig = { ...(additionalHandlers ?? {}), ...defaultHandlersConfig };
+            }
 
             if (handlersConfig.hasOwnProperty(name)) {
                 return handlersConfig[name as any](path, additionalHandlers);
             }
 
-            return typedPath([...path, name.toString()], additionalHandlers);
+            return typedPath(handlersConfig, [...path, name.toString()], true);
         }
     });
 }
