@@ -57,7 +57,7 @@ const testAdditionalHandlers = {
     $url: (path: string[]) => path.join('/')
 }
 
-console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url); // this will output "a/b/c"
+console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url); // this will output "/a/b/c"
 ```
 
 --- 
