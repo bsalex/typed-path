@@ -17,6 +17,11 @@ type TestType = {
     }
 };
 
+interface OptionalThing {
+    foo: string;
+    bar?: string;
+}
+
 const testAdditionalHandlers = {
     $abs: (path: string[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
     $url: (path: string[]) => path.join('/')
@@ -51,6 +56,10 @@ describe('Typed path', () => {
     it('should get function path', () => {
         expect(tp<TestType>().a.testFunc.$path).to.equal('a.testFunc');
         expect(tp<TestType>().a.testFunc.$raw).to.deep.equal(['a', 'testFunc']);
+    });
+
+    it('should get path with optional fields', () => {
+        expect(tp<OptionalThing>().bar.$path).to.equal('bar');
     });
 
     it('should get path with symbol', () => {
