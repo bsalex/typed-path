@@ -5,7 +5,8 @@
         "noImplicitAny": true,
         "sourceMap": true,
         "declaration": true,
-        "lib": ["es6", "es7", "dom"]
+        "lib": ["es6", "es7", "dom"],
+        "strict": true
     },
     "compileOnSave": false,
     "files": [

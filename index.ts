@@ -49,7 +49,7 @@ export function typedPath<T, K extends TypedPathHandlersConfig = Record<never, n
             let handlersConfig: TypedPathHandlersConfig;
 
             if (defaultsApplied) {
-                handlersConfig = additionalHandlers;
+                handlersConfig = additionalHandlers!;
             } else {
                 handlersConfig = { ...(additionalHandlers ?? {}), ...defaultHandlersConfig };
             }
