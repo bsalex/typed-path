@@ -10,6 +10,7 @@
     },
     "compileOnSave": false,
     "files": [
-        "index.ts"
+        "index.ts",
+        "index.spec.ts"
     ]
 }

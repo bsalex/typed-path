@@ -36,10 +36,10 @@ export type TypedPathWrapper<T, TPH extends TypedPathHandlers<Record<never, neve
         ? {
             (): TypedPathWrapper<RET, TPH>;
         } & {
-            [P in keyof RET]: TypedPathWrapper<RET[P], TPH>;
+            [P in keyof Required<RET>]: TypedPathWrapper<RET[P], TPH>;
         }
         : {
-            [P in keyof T]: TypedPathWrapper<T[P], TPH>;
+            [P in keyof Required<T>]: TypedPathWrapper<T[P], TPH>;
         }
     ) & TypedPathHandlers<TPH>;
 
