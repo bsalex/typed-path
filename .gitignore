@@ -3,3 +3,4 @@ node_modules
 *.map
 *.js
 *.d.ts
+!jest.config.js
