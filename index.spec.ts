@@ -1,19 +1,19 @@
 import {typedPath as tp, typedPath} from './index';
 
-const sym = Symbol("SomeSymbol");
+const sym = Symbol('SomeSymbol');
 
 type TestType = {
     a: {
-        testFunc: () => { result: string },
+        testFunc: () => {result: string};
         b: {
-            arrayOfArrays: string[][]
+            arrayOfArrays: string[][];
             c: number;
-            f: { test: string, blah: { path?: string }, arr: string[] }[];
-        }
+            f: {test: string; blah: {path?: string}; arr: string[]}[];
+        };
         [sym]: {
-            g: string,
-        }
-    }
+            g: string;
+        };
+    };
 };
 
 interface OptionalThing {
@@ -24,7 +24,7 @@ interface OptionalThing {
 const testAdditionalHandlers = {
     $abs: (path: string[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
     $url: (path: string[]) => path.join('/')
-}
+};
 
 describe('Typed path', () => {
     it('should get field path', () => {
@@ -34,12 +34,12 @@ describe('Typed path', () => {
 
     it('should get index path', () => {
         expect(tp<TestType>().a.b.f[3].$path).toEqual('a.b.f[3]');
-        expect(tp<TestType>().a.b.f[3].$raw).toEqual(['a', 'b', 'f', "3"]);
+        expect(tp<TestType>().a.b.f[3].$raw).toEqual(['a', 'b', 'f', '3']);
     });
 
     it('should get index of index for array of array ', () => {
         expect(tp<TestType>().a.b.arrayOfArrays[3][3].$path).toEqual('a.b.arrayOfArrays[3][3]');
-        expect(tp<TestType>().a.b.arrayOfArrays[3][3].$raw).toEqual(['a', 'b', 'arrayOfArrays', "3", "3"]);
+        expect(tp<TestType>().a.b.arrayOfArrays[3][3].$raw).toEqual(['a', 'b', 'arrayOfArrays', '3', '3']);
     });
 
     it('should get array node', () => {
@@ -76,9 +76,9 @@ describe('Typed path', () => {
 
     it('should work with extended handlers', () => {
         expect(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$url).toEqual('a/b/c');
-    })
+    });
 
     it('should work with chained extended handlers', () => {
         expect(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual('/a/b/c');
-    })
+    });
 });
