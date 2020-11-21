@@ -31,9 +31,17 @@ Like this:
 
 #### .$raw
 [@dcbrwn](https://github.com/dcbrwn)  
-If you need a raw path, which is of type `string[]` - you can get it using `$raw` special field. 
+If you need a raw path, which is of type `string[]` - you can get it using `$raw` special field.  
+*Deprecated, since it transforms symbols and numbers to strings, which might be not an expected behavior (the method name is "raw").
+Please use `.$rawPath`*
 ```js
     console.log(tp<TestType>().a.b.c.d.$raw); // this will output ["a", "b", "c", "d"]
+```
+
+#### .$rawPath
+If you need a raw path, which is of type `(string | number | Symbol)[]` - you can get it using `$rawPath` special field.  
+```js
+    console.log(tp<TestType>().a.b[5].c.d.$rawPath); // this will output ["a", "b", 5, "c", "d"]
 ```
 
 #### Additional handlers 
