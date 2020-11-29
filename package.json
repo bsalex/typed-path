@@ -2,7 +2,7 @@
   "name": "typed-path",
   "version": "2.2.1",
   "description": "Type safe object string paths for typescript.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/bsalex/typed-path.git"
@@ -24,17 +24,19 @@
   "files": [
     "LICENSE",
     "index.ts",
-    "index.js",
-    "index.js.map",
-    "index.d.ts"
+    "dist/index.js",
+    "dist/index.js.map",
+    "dist/index.d.ts"
   ],
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "jest index.spec.ts",
+    "test": "yarn tsdlint && jest index.spec.ts",
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
+    "tsdlint": "yarn build && tsd",
     "format": "prettier --parser typescript --write index.ts index.spec.ts",
-    "prepush": "yarn lint && yarn build && git diff --exit-code",
+    "prepush": "yarn prepare",
     "prepare": "yarn test && yarn build",
-    "build": "tsc"
+    "build": "tsc -p tsconfig.dist.json"
   },
   "devDependencies": {
     "husky": "^0.13.1",
@@ -42,7 +44,11 @@
     "prettier": "2.2.0",
     "ts-jest": "^26.4.4",
     "ts-node": "^9.0.0",
+    "tsd": "^0.13.1",
     "tslint": "^4.4.2",
     "typescript": "^4.0.5"
+  },
+  "tsd": {
+    "directory": "dist"
   }
 }

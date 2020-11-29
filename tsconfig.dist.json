@@ -7,12 +7,10 @@
         "declaration": true,
         "lib": ["es6", "es7", "dom"],
         "strict": true,
-        "noEmit": true
+        "outDir": "dist"
     },
     "compileOnSave": false,
     "include": [
-        "index.ts",
-        "index.spec.ts",
-        "dist/index.test-d.ts"
+        "index.ts"
     ]
 }
