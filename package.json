@@ -1,6 +1,6 @@
 {
   "name": "typed-path",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Type safe object string paths for typescript.",
   "main": "index.js",
   "repository": {
