@@ -2,7 +2,7 @@
 
 [![https://nodei.co/npm/typed-path.svg?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/typed-path.svg?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/typed-path)  
 
-![Travis (.org)](https://img.shields.io/travis/bsalex/typed-path)
+[![Travis](https://img.shields.io/travis/bsalex/typed-path)](https://travis-ci.org/github/bsalex/typed-path)
 [![HitCount](http://hits.dwyl.com/bsalex/typed-path.svg)](http://hits.dwyl.com/bsalex/typed-path)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/bsalex/typed-path/issues)
 ![GitHub top language](https://img.shields.io/github/languages/top/bsalex/typed-path)
