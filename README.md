@@ -10,9 +10,9 @@
 ![npm bundle size](https://img.shields.io/bundlephobia/min/typed-path)
 ![GitHub last commit](https://img.shields.io/github/last-commit/bsalex/typed-path)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/bsalex/typed-path)
-![GitHub issues](https://img.shields.io/github/issues/bsalex/typed-path)
-![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/bsalex/typed-path)
-![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/bsalex/typed-path)
+[![GitHub issues](https://img.shields.io/github/issues/bsalex/typed-path)](https://github.com/bsalex/typed-path/issues)
+[![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/bsalex/typed-path)](https://codeclimate.com/github/bsalex/typed-path/)
+[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/bsalex/typed-path)](https://codeclimate.com/github/bsalex/typed-path/)
 [![codecov](https://codecov.io/gh/bsalex/typed-path/branch/master/graph/badge.svg?token=uzpVtSWKbv)](https://codecov.io/gh/bsalex/typed-path)
 ---
 
@@ -80,7 +80,7 @@ You can extend path handlers functionality using additional handlers:
 
 ```js
 const testAdditionalHandlers = {
-    $url: (path: string[]) => path.join('/')
+    $url: (path: TypedPathKey[]) => path.join('/')
 }
 
 console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$url); // this will output "a/b/c"
@@ -90,8 +90,9 @@ The additional handlers are also chainable:
 
 ```js
 const testAdditionalHandlers = {
-    $abs: (path: string[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
-    $url: (path: string[]) => path.join('/')
+    $abs: (path: TypedPathKey[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
+    $url: (path: TypedPathKey[]) => path.join('/'),
+    $length: (path: TypedPathKey[]) => path.length
 }
 
 console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url); // this will output "/a/b/c"
