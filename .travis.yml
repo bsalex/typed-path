@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+    - "Fermium"
+
+install:
+    - npm install -g yarn
+    - yarn
+
+jobs:
+    include:
+        - script: yarn test --coverage
+
+addons:
+    code_climate:
+        repo_token: 409795f5026e32a2d7c9b52b97244d14b2c577e2842265fccf6edaa29fe41ff6
+
+sudo: false
+
+after_script:
+    - codeclimate-test-reporter < coverage/lcov.info

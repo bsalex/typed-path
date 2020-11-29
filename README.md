@@ -1,4 +1,5 @@
 # Typed Path
+[![Build Status](https://travis-ci.org/bsalex/typed-path.svg?branch=master)](https://travis-ci.org/bsalex/typed-path.svg?branch=master)
 
 ---
 

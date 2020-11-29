@@ -4,3 +4,5 @@ node_modules
 *.js
 *.d.ts
 !jest.config.js
+coverage
+.idea
