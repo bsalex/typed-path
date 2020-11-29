@@ -5,7 +5,7 @@ node_js:
 install:
     - npm install codecov -g
     - npm install -g yarn
-    - yarn
+    - yarn install --ignore-scripts
 
 jobs:
     include:
@@ -19,3 +19,6 @@ sudo: false
 
 after_success:
   - codecov
+
+cache:
+  yarn: true
