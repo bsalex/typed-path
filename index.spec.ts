@@ -71,6 +71,10 @@ describe('Typed path', () => {
         expect(tp<TestType>().a.b.f[3].blah.path.toString()).toEqual('a.b.f[3].blah.path');
     });
 
+    it('should get path for concatenation with a string', () => {
+        expect(Object.prototype.toString.call(tp<TestType>().a.b.f[3].blah.path)).toEqual('[object a.b.f[3].blah.path]');
+    });
+
     it('should get path for valueOf()', () => {
         expect(tp<TestType>().a.b.f[3].blah.path.valueOf()).toEqual('a.b.f[3].blah.path');
     });

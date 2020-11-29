@@ -5,7 +5,7 @@
 ## Problem
 
 Types are lost when string paths are used in typescript.  
-I.e. `_.get, _.map, _.set, R.pluck` from libraries like [lodash](https://lodash.com), [ramda](http://ramdajs.com/).  
+I.e., `_.get, _.map, _.set, R.pluck` from libraries like [lodash](https://lodash.com), [ramda](http://ramdajs.com/).  
 It makes those methods dangerous in case of refactoring, the same as JavaScript.  
 
 ![](https://res.cloudinary.com/daren64mz/image/upload/v1487457505/string-refactoring_x2tubt.gif)
@@ -16,13 +16,15 @@ It makes those methods dangerous in case of refactoring, the same as JavaScript.
 
 ### Errors
 
-With `typed-path` typescript can check paths and warns you about errors.
+With `typed-path`, typescript can check paths and warns you about errors.
 
 ![](http://res.cloudinary.com/daren64mz/image/upload/v1487457505/tp-refactoring_p4byr3.gif)
 
+### Path access methods
+
 #### .$path
 [@m-abboud](https://github.com/m-abboud)  
-Also you can get access to the path string using `$path` special field. 
+Also, you can get access to the path string using `$path` special field. 
 
 Like this:
 ```js
@@ -43,6 +45,19 @@ If you need a raw path, which is of type `(string | number | Symbol)[]` - you ca
 ```js
     console.log(tp<TestType>().a.b[5].c.d.$rawPath); // this will output ["a", "b", 5, "c", "d"]
 ```
+
+The `$rawPath` is something that you might want to use with the following methods from
+Ramda, to add type safety on the path:
+- [R.assocPath](https://ramdajs.com/docs/#assocPath),
+- [R.dissocPath](https://ramdajs.com/docs/#dissocPath),
+- [R.hasPath](https://ramdajs.com/docs/#hasPath),
+- [R.path](https://ramdajs.com/docs/#path),
+- [R.pathEq](https://ramdajs.com/docs/#pathEq),
+- [R.pathOr](https://ramdajs.com/docs/#pathOr),
+- [R.paths](https://ramdajs.com/docs/#paths),
+- [R.lensPath](https://ramdajs.com/docs/#lensPath)
+
+Example: [https://codesandbox.io/s/typed-path-ramda-assoc-path-x3qby?file=/src/index.ts](https://codesandbox.io/s/typed-path-ramda-assoc-path-x3qby?file=/src/index.ts)
 
 #### Additional handlers 
 [@nick-lvov-dev](https://github.com/nick-lvov-dev)
@@ -72,7 +87,7 @@ console.log(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).
 
 ### Suggestions
 
-Also `typed-path` allows typescript to suggest field names for you.
+Also, `typed-path` allows typescript to suggest field names for you.
 
 ![](http://res.cloudinary.com/daren64mz/image/upload/v1487458263/tp-suggestions_lg5vnb.gif)
 

@@ -28,7 +28,7 @@ const defaultHandlersConfig = {
     $raw: (path: TypedPathKey[]) => path.map((chunk) => chunk.toString()),
     $rawPath: (path: TypedPathKey[]) => path,
     toString: (path: TypedPathKey[]) => () => pathToString(path),
-    [Symbol.toStringTag]: (path: TypedPathKey[]) => () => pathToString(path),
+    [Symbol.toStringTag]: (path: TypedPathKey[]) => pathToString(path),
     valueOf: (path: TypedPathKey[]) => () => pathToString(path)
 };
 
