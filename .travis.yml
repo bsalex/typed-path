@@ -3,6 +3,7 @@ node_js:
     - "Fermium"
 
 install:
+    - npm install codecov -g
     - npm install -g yarn
     - yarn
 
@@ -16,5 +17,5 @@ addons:
 
 sudo: false
 
-after_script:
-    - codeclimate-test-reporter < coverage/lcov.info
+after_success:
+  - codecov

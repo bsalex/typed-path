@@ -1,6 +1,18 @@
 # Typed Path
-[![Build Status](https://travis-ci.org/bsalex/typed-path.svg?branch=master)](https://travis-ci.org/bsalex/typed-path.svg?branch=master)
 
+[![https://nodei.co/npm/typed-path.svg?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/typed-path.svg?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/typed-path)  
+
+[![Build Status](https://travis-ci.org/bsalex/typed-path.svg?branch=master)](https://travis-ci.org/bsalex/typed-path.svg?branch=master)
+[![HitCount](http://hits.dwyl.com/bsalex/typed-path.svg)](http://hits.dwyl.com/bsalex/typed-path)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/bsalex/typed-path/issues)
+![GitHub top language](https://img.shields.io/github/languages/top/bsalex/typed-path)
+![David](https://img.shields.io/david/bsalex/typed-path)
+![npm bundle size](https://img.shields.io/bundlephobia/min/typed-path)
+![GitHub last commit](https://img.shields.io/github/last-commit/bsalex/typed-path)
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/bsalex/typed-path)
+![GitHub issues](https://img.shields.io/github/issues/bsalex/typed-path)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability-percentage/bsalex/typed-path)
+![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/bsalex/typed-path)
 ---
 
 ## Problem
