@@ -21,8 +21,8 @@ With `typed-path`, typescript can check paths and warns you about errors.
 ![](http://res.cloudinary.com/daren64mz/image/upload/v1487457505/tp-refactoring_p4byr3.gif)
 
 ### Path access methods
-
-#### .$path
+#### Default
+##### .$path
 [@m-abboud](https://github.com/m-abboud)  
 Also, you can get access to the path string using `$path` special field. 
 
@@ -31,7 +31,7 @@ Like this:
     console.log(tp<TestType>().a.b.c.d.$path); // this will output "a.b.c.d"
 ```
 
-#### .$raw
+##### .$raw
 [@dcbrwn](https://github.com/dcbrwn)  
 If you need a raw path, which is of type `string[]` - you can get it using `$raw` special field.  
 *Deprecated, since it transforms symbols and numbers to strings, which might be not an expected behavior (the method name is "raw").
@@ -40,7 +40,7 @@ Please use `.$rawPath`*
     console.log(tp<TestType>().a.b.c.d.$raw); // this will output ["a", "b", "c", "d"]
 ```
 
-#### .$rawPath
+##### .$rawPath
 If you need a raw path, which is of type `(string | number | Symbol)[]` - you can get it using `$rawPath` special field.  
 ```js
     console.log(tp<TestType>().a.b[5].c.d.$rawPath); // this will output ["a", "b", 5, "c", "d"]
