@@ -1,15 +1,5 @@
+import { TestType, sym } from './../index.spec';
 import {typedPath as tp} from '../index';
-
-type TestType = {
-    a: {
-        testFunc: () => { result: string },
-        b: {
-            arrayOfArrays: string[][]
-            c: number;
-            f: { test: string, blah: { path?: string }, arr: string[] }[];
-        }
-    }
-};
 
 function getField(path: string, object: any) {
     return 'Here should be some logic to get field by path';
@@ -21,6 +11,10 @@ const testObject: TestType = {
             arrayOfArrays: [['hi']],
             c: 5,
             f: [{test: 'tes123t', blah: {path: '123123'}, arr: ['tt']}]
+        },
+        testFunc: () => ({result: 'test'}),
+        [sym]: {
+            g: 'test'
         }
     }
 };

@@ -1,8 +1,8 @@
 import {typedPath, TypedPathKey} from './index';
 
-const sym = Symbol('SomeSymbol');
+export const sym = Symbol('SomeSymbol');
 
-type TestType = {
+export type TestType = {
     a: {
         testFunc: () => {result: string};
         b: {
@@ -27,56 +27,100 @@ const testAdditionalHandlers = {
     $url: (path: TypedPathKey[]) => path.join('/')
 };
 
+const testCases = {
+    'regular field path': {
+        path: typedPath<TestType>().a.b.c,
+        expectedResults: {
+            $path: 'a.b.c',
+            $raw: ['a', 'b', 'c'],
+            $rawPath: ['a', 'b', 'c']
+        }
+    },
+    'path with index': {
+        path: typedPath<TestType>().a.b.f[3],
+        expectedResults: {
+            $path: 'a.b.f[3]',
+            $raw: ['a', 'b', 'f', '3'],
+            $rawPath: ['a', 'b', 'f', 3]
+        }
+    },
+    'path with index of index for array of array': {
+        path: typedPath<TestType>().a.b.arrayOfArrays[3][3],
+        expectedResults: {
+            $path: 'a.b.arrayOfArrays[3][3]',
+            $raw: ['a', 'b', 'arrayOfArrays', '3', '3'],
+            $rawPath: ['a', 'b', 'arrayOfArrays', 3, 3]
+        }
+    },
+    'path with function': {
+        path: typedPath<TestType>().a.testFunc,
+        expectedResults: {
+            $path: 'a.testFunc',
+            $raw: ['a', 'testFunc'],
+            $rawPath: ['a', 'testFunc']
+        }
+    },
+    'path with function return type': {
+        path: typedPath<TestType>().a.testFunc.result,
+        expectedResults: {
+            $path: 'a.testFunc.result',
+            $raw: ['a', 'testFunc', 'result'],
+            $rawPath: ['a', 'testFunc', 'result']
+        }
+    },
+    'path with optional field': {
+        path: typedPath<OptionalThing>().bar,
+        expectedResults: {
+            $path: 'bar',
+            $raw: ['bar'],
+            $rawPath: ['bar']
+        }
+    },
+    'path with symbol': {
+        path: typedPath<TestType>().a[sym].g,
+        expectedResults: {
+            $path: 'a.Symbol(SomeSymbol).g',
+            $raw: ['a', 'Symbol(SomeSymbol)', 'g'],
+            $rawPath: ['a', sym, 'g']
+        }
+    }
+}
+
 describe('Typed path', () => {
-    it('should get regular field path', () => {
-        expect(typedPath<TestType>().a.b.c.$path).toEqual('a.b.c');
-        expect(typedPath<TestType>().a.b.c.$raw).toEqual(['a', 'b', 'c']);
-    });
 
-    it('should get index path', () => {
-        expect(typedPath<TestType>().a.b.f[3].$path).toEqual('a.b.f[3]');
-        expect(typedPath<TestType>().a.b.f[3].$raw).toEqual(['a', 'b', 'f', '3']);
-    });
+    for(const [testCaseName, {path, expectedResults}] of Object.entries(testCases)) {
+        describe(`for ${testCaseName}`, () => {
+            if ('$path' in expectedResults) {
+                it(`should have correct $path special field value`, () => {
+                    expect(path.$path).toEqual(expectedResults.$path);
+                })
 
-    it('should get index of index for array of array ', () => {
-        expect(typedPath<TestType>().a.b.arrayOfArrays[3][3].$path).toEqual('a.b.arrayOfArrays[3][3]');
-        expect(typedPath<TestType>().a.b.arrayOfArrays[3][3].$raw).toEqual(['a', 'b', 'arrayOfArrays', '3', '3']);
-    });
+                it(`should have correct .toString() special field value`, () => {
+                    expect(path.toString()).toEqual(expectedResults.$path);
+                })
 
-    it('should get array node', () => {
-        expect(typedPath<TestType>().a.b.f.$path).toEqual('a.b.f');
-        expect(typedPath<TestType>().a.b.f.$raw).toEqual(['a', 'b', 'f']);
-    });
+                it(`should have correct .valueOf() special field value`, () => {
+                    expect(path.valueOf()).toEqual(expectedResults.$path);
+                })
+            }
 
-    it('should get function return type path', () => {
-        expect(typedPath<TestType>().a.testFunc.result.$path).toEqual('a.testFunc.result');
-        expect(typedPath<TestType>().a.testFunc.result.$raw).toEqual(['a', 'testFunc', 'result']);
-    });
+            if ('$raw' in expectedResults) {
+                it(`should have correct $raw special field value`, () => {
+                    expect(path.$raw).toEqual(expectedResults.$raw);
+                })
+            }
 
-    it('should get function path', () => {
-        expect(typedPath<TestType>().a.testFunc.$path).toEqual('a.testFunc');
-        expect(typedPath<TestType>().a.testFunc.$raw).toEqual(['a', 'testFunc']);
-    });
+            if ('$rawPath' in expectedResults) {
+                it(`should have correct $rawPath special field value`, () => {
+                    expect(path.$rawPath).toEqual(expectedResults.$rawPath);
+                })
+            }
+            
+        });
+    }
 
-    it('should get path with optional fields', () => {
-        expect(typedPath<OptionalThing>().bar.$path).toEqual('bar');
-    });
-
-    it('should get path with symbol', () => {
-        expect(typedPath<TestType>().a[sym].g.$path).toEqual('a.Symbol(SomeSymbol).g');
-        expect(typedPath<TestType>().a[sym].g.$raw).toEqual(['a', 'Symbol(SomeSymbol)', 'g']);
-    });
-
-    it('should get path for toString()', () => {
-        expect(typedPath<TestType>().a.b.f[3].blah.path.toString()).toEqual('a.b.f[3].blah.path');
-    });
-
-    it('should get path for concatenation with a string', () => {
+    it('should get path with a string tag', () => {
         expect(Object.prototype.toString.call(typedPath<TestType>().a.b.f[3].blah.path)).toEqual('[object a.b.f[3].blah.path]');
-    });
-
-    it('should get path for valueOf()', () => {
-        expect(typedPath<TestType>().a.b.f[3].blah.path.valueOf()).toEqual('a.b.f[3].blah.path');
     });
 
     it('should work with extended handlers', () => {
@@ -85,9 +129,5 @@ describe('Typed path', () => {
 
     it('should work with chained extended handlers', () => {
         expect(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual('/a/b/c');
-    });
-
-    it('should return $rawPath path without transforming each key to string', () => {
-        expect(typedPath<TestType>().a.b.arrayOfArrays[3][3].$rawPath).toEqual(['a', 'b', 'arrayOfArrays', 3, 3]);
     });
 });
