@@ -1,9 +1,9 @@
-function pathToString(path: string[]): string {
-    return path.reduce((current, next) => {
-        if (+next === +next) {
+function pathToString(path: TypedPathKey[]): string {
+    return path.reduce<string>((current, next) => {
+        if (typeof next === 'number') {
             current += `[${next}]`;
         } else {
-            current += current === '' ? `${next}` : `.${next}`;
+            current += current === '' ? next.toString() : `.${next.toString()}`;
         }
 
         return current;
@@ -16,15 +16,20 @@ export type TypedPathFunction<T> = (...args: any[]) => T;
 
 export type TypedPathHandlersConfig = Record<
     string,
-    <T extends TypedPathHandlersConfig = Record<never, never>>(path: string[], additionalHandlers?: T) => any
+    <T extends TypedPathHandlersConfig = Record<never, never>>(path: TypedPathKey[], additionalHandlers?: T) => any
 >;
 
 const defaultHandlersConfig = {
-    $path: (path: string[]) => pathToString(path),
-    $raw: (path: string[]) => path,
-    toString: (path: string[]) => () => pathToString(path),
-    [Symbol.toStringTag]: (path: string[]) => () => pathToString(path),
-    valueOf: (path: string[]) => () => pathToString(path)
+    $path: (path: TypedPathKey[]) => pathToString(path),
+    /**
+     * @deprecated This method transforms all path chunks to strings.
+     * If you need the path with numbers and Symbols - use $rawPath
+     */
+    $raw: (path: TypedPathKey[]) => path.map((chunk) => chunk.toString()),
+    $rawPath: (path: TypedPathKey[]) => path,
+    toString: (path: TypedPathKey[]) => () => pathToString(path),
+    [Symbol.toStringTag]: (path: TypedPathKey[]) => pathToString(path),
+    valueOf: (path: TypedPathKey[]) => () => pathToString(path)
 };
 
 export type TypedPathHandlers<T extends TypedPathHandlersConfig> = {
@@ -46,29 +51,36 @@ export type TypedPathWrapper<T, TPH extends TypedPathHandlers<Record<never, neve
       }) &
     TypedPathHandlers<TPH>;
 
+const emptyObject = {};
 export function typedPath<T, K extends TypedPathHandlersConfig = Record<never, never>>(
     additionalHandlers?: K,
-    path: string[] = [],
+    path: TypedPathKey[] = [],
     defaultsApplied: boolean = false
 ): TypedPathWrapper<T, K & typeof defaultHandlersConfig> {
-    return <TypedPathWrapper<T, K & typeof defaultHandlersConfig>>new Proxy(
-        {},
-        {
-            get(target: T, name: TypedPathKey) {
-                let handlersConfig: TypedPathHandlersConfig;
+    return <TypedPathWrapper<T, K & typeof defaultHandlersConfig>>new Proxy(emptyObject, {
+        get(target: T, name: TypedPathKey) {
+            let handlersConfig: TypedPathHandlersConfig;
 
-                if (defaultsApplied) {
-                    handlersConfig = additionalHandlers!;
-                } else {
-                    handlersConfig = {...(additionalHandlers ?? {}), ...defaultHandlersConfig};
-                }
-
-                if (handlersConfig.hasOwnProperty(name)) {
-                    return handlersConfig[name as any](path, additionalHandlers);
-                }
-
-                return typedPath(handlersConfig, [...path, name.toString()], true);
+            if (defaultsApplied) {
+                handlersConfig = additionalHandlers!;
+            } else {
+                handlersConfig = {...(additionalHandlers ?? {}), ...defaultHandlersConfig};
             }
+
+            if (handlersConfig.hasOwnProperty(name)) {
+                return handlersConfig[name as any](path, additionalHandlers);
+            }
+
+            let newChunk = name;
+
+            if (typeof newChunk === 'string') {
+                const nameAsNumber = +newChunk;
+                if (nameAsNumber === nameAsNumber) {
+                    newChunk = nameAsNumber;
+                }
+            }
+
+            return typedPath(handlersConfig, [...path, newChunk], true);
         }
-    );
+    });
 }

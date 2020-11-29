@@ -1,4 +1,4 @@
-import {typedPath as tp, typedPath} from './index';
+import {typedPath as tp, typedPath, TypedPathKey} from './index';
 
 const sym = Symbol('SomeSymbol');
 
@@ -22,8 +22,9 @@ interface OptionalThing {
 }
 
 const testAdditionalHandlers = {
-    $abs: (path: string[]) => typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
-    $url: (path: string[]) => path.join('/')
+    $abs: (path: TypedPathKey[]) =>
+        typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
+    $url: (path: TypedPathKey[]) => path.join('/')
 };
 
 describe('Typed path', () => {
@@ -70,6 +71,10 @@ describe('Typed path', () => {
         expect(tp<TestType>().a.b.f[3].blah.path.toString()).toEqual('a.b.f[3].blah.path');
     });
 
+    it('should get path for concatenation with a string', () => {
+        expect(Object.prototype.toString.call(tp<TestType>().a.b.f[3].blah.path)).toEqual('[object a.b.f[3].blah.path]');
+    });
+
     it('should get path for valueOf()', () => {
         expect(tp<TestType>().a.b.f[3].blah.path.valueOf()).toEqual('a.b.f[3].blah.path');
     });
@@ -80,5 +85,9 @@ describe('Typed path', () => {
 
     it('should work with chained extended handlers', () => {
         expect(tp<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual('/a/b/c');
+    });
+
+    it('should return $rawPath path without transforming each key to string', () => {
+        expect(tp<TestType>().a.b.arrayOfArrays[3][3].$rawPath).toEqual(['a', 'b', 'arrayOfArrays', 3, 3]);
     });
 });
