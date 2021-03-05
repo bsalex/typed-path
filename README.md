@@ -108,5 +108,5 @@ Also, `typed-path` allows typescript to suggest field names for you.
 
 ## License
 
-Copyright (c) 2020 Oleksandr Beshchuk <[bs.alex.mail@gmail.com](mailto:bs.alex.mail@gmail.com)>  
+Copyright (c) 2021 Oleksandr Beshchuk <[bs.alex.mail@gmail.com](mailto:bs.alex.mail@gmail.com)>  
 Licensed under the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
