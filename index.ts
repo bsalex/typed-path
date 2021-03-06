@@ -18,7 +18,7 @@ function pathToString(path: TypedPathKey[]): string {
     }, '');
 }
 
-export type TypedPathFunction<T> = (...args: any[]) => T;
+export type TypedPathFunction<ResultType> = (...args: any[]) => ResultType;
 
 export type TypedPathHandlersConfig = Record<
     string,
@@ -40,24 +40,30 @@ const defaultHandlersConfig = {
 
 type DefaultHandlers = typeof defaultHandlersConfig;
 
-export type TypedPathHandlers<T extends TypedPathHandlersConfig> = {
-    [key in keyof T]: ReturnType<T[key]>;
+export type TypedPathHandlers<ConfigType extends TypedPathHandlersConfig> = {
+    [key in keyof ConfigType]: ReturnType<ConfigType[key]>;
 };
 
-export type TypedPathWrapper<T, TPH extends TypedPathHandlers<Record<never, never>>> = (T extends Array<infer Z>
+export type TypedPathWrapper<
+    OriginalType,
+    HandlersType extends TypedPathHandlers<Record<never, never>>
+> = (OriginalType extends Array<infer OriginalArrayItemType>
     ? {
-          [index: number]: TypedPathWrapper<Z, TPH>;
+          [index: number]: TypedPathWrapper<OriginalArrayItemType, HandlersType>;
       }
-    : T extends TypedPathFunction<infer RET>
+    : OriginalType extends TypedPathFunction<infer OriginalFunctionResultType>
     ? {
-          (): TypedPathWrapper<RET, TPH>;
+          (): TypedPathWrapper<OriginalFunctionResultType, HandlersType>;
       } & {
-          [P in keyof Required<RET>]: TypedPathWrapper<RET[P], TPH>;
+          [P in keyof Required<OriginalFunctionResultType>]: TypedPathWrapper<
+              OriginalFunctionResultType[P],
+              HandlersType
+          >;
       }
     : {
-          [P in keyof Required<T>]: TypedPathWrapper<T[P], TPH>;
+          [P in keyof Required<OriginalType>]: TypedPathWrapper<OriginalType[P], HandlersType>;
       }) &
-    TypedPathHandlers<TPH>;
+    TypedPathHandlers<HandlersType>;
 
 function convertNumericKeyToNumber(key: TypedPathKey): TypedPathKey {
     if (typeof key === 'string') {
@@ -81,12 +87,12 @@ function getHandlerByNameKey<K extends TypedPathHandlersConfig>(name: TypedPathK
 }
 
 const emptyObject = {};
-export function typedPath<T, K extends TypedPathHandlersConfig = Record<never, never>>(
-    additionalHandlers?: K,
+export function typedPath<OriginalObjectType, HandlersType extends TypedPathHandlersConfig = Record<never, never>>(
+    additionalHandlers?: HandlersType,
     path: TypedPathKey[] = []
-): TypedPathWrapper<T, K & DefaultHandlers> {
-    return <TypedPathWrapper<T, K & DefaultHandlers>>new Proxy(emptyObject, {
-        get(target: T, name: TypedPathKey) {
+): TypedPathWrapper<OriginalObjectType, HandlersType & DefaultHandlers> {
+    return <TypedPathWrapper<OriginalObjectType, HandlersType & DefaultHandlers>>new Proxy(emptyObject, {
+        get(target: unknown, name: TypedPathKey) {
             const handler = getHandlerByNameKey(name, additionalHandlers);
 
             return handler

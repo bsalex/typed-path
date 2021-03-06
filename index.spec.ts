@@ -84,43 +84,43 @@ const testCases = {
             $rawPath: ['a', sym, 'g']
         }
     }
-}
+};
 
 describe('Typed path', () => {
-
-    for(const [testCaseName, {path, expectedResults}] of Object.entries(testCases)) {
+    for (const [testCaseName, {path, expectedResults}] of Object.entries(testCases)) {
         describe(`for ${testCaseName}`, () => {
             if ('$path' in expectedResults) {
                 it(`should have correct $path special field value`, () => {
                     expect(path.$path).toEqual(expectedResults.$path);
-                })
+                });
 
                 it(`should have correct .toString() special field value`, () => {
                     expect(path.toString()).toEqual(expectedResults.$path);
-                })
+                });
 
                 it(`should have correct .valueOf() special field value`, () => {
                     expect(path.valueOf()).toEqual(expectedResults.$path);
-                })
+                });
             }
 
             if ('$raw' in expectedResults) {
                 it(`should have correct $raw special field value`, () => {
                     expect(path.$raw).toEqual(expectedResults.$raw);
-                })
+                });
             }
 
             if ('$rawPath' in expectedResults) {
                 it(`should have correct $rawPath special field value`, () => {
                     expect(path.$rawPath).toEqual(expectedResults.$rawPath);
-                })
+                });
             }
-            
         });
     }
 
     it('should get path with a string tag', () => {
-        expect(Object.prototype.toString.call(typedPath<TestType>().a.b.f[3].blah.path)).toEqual('[object a.b.f[3].blah.path]');
+        expect(Object.prototype.toString.call(typedPath<TestType>().a.b.f[3].blah.path)).toEqual(
+            '[object a.b.f[3].blah.path]'
+        );
     });
 
     it('should work with extended handlers', () => {
@@ -128,6 +128,8 @@ describe('Typed path', () => {
     });
 
     it('should work with chained extended handlers', () => {
-        expect(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual('/a/b/c');
+        expect(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual(
+            '/a/b/c'
+        );
     });
 });
