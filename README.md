@@ -3,7 +3,7 @@
 [![https://nodei.co/npm/typed-path.svg?downloads=true&downloadRank=true&stars=true](https://nodei.co/npm/typed-path.svg?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/typed-path)  
 
 [![Travis](https://img.shields.io/travis/bsalex/typed-path)](https://travis-ci.org/github/bsalex/typed-path)
-[![HitCount](http://hits.dwyl.com/bsalex/typed-path.svg)](http://hits.dwyl.com/bsalex/typed-path)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fbsalex%2Ftyped-path&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/bsalex/typed-path/issues)
 ![GitHub top language](https://img.shields.io/github/languages/top/bsalex/typed-path)
 ![David](https://img.shields.io/david/bsalex/typed-path)
@@ -15,18 +15,45 @@
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/bsalex/typed-path)](https://codeclimate.com/github/bsalex/typed-path/)
 [![codecov](https://codecov.io/gh/bsalex/typed-path/branch/master/graph/badge.svg?token=uzpVtSWKbv)](https://codecov.io/gh/bsalex/typed-path)
 ---
+  
+## Overview
 
-## Problem
+This small utility helps to extract type information from a TypeScript class, interface or type to use it in your code. 
 
-Types are lost when string paths are used in typescript.  
-I.e., `_.get, _.map, _.set, R.pluck` from libraries like [lodash](https://lodash.com), [ramda](http://ramdajs.com/).  
-It makes those methods dangerous in case of refactoring, the same as JavaScript.  
+Example:
 
-![](https://res.cloudinary.com/daren64mz/image/upload/v1487457505/string-refactoring_x2tubt.gif)
+```js
+import {typedPath} from 'typed-path';
+
+type TestType = {
+    a: {
+        testFunc: () => {result: string};
+        b: {
+            arrayOfArrays: string[][];
+            c: {
+                d: number;
+            };
+        }[];
+    };
+};
+
+console.log(typedPath<TestType>().a.b[5].c.d.$rawPath);
+/*
+Outputs
+["a", "b", 5, "c", "d"]
+
+*/
+```
+Please see other path access methods and how to add custom path access methods below.
+
+The utility might also be used to add type protection to such methods as `_.get, _.map, _.set, R.pluck` from libraries like [lodash](https://lodash.com), [ramda](http://ramdajs.com/).  
+
+**It is recommended, though, to use [optional chaining](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-7.html#optional-chaining) instead.**
+
 
 ---
 
-## Solution
+## Features
 
 ### Errors
 
