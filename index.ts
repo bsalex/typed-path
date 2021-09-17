@@ -38,7 +38,7 @@ const defaultHandlersConfig = {
     valueOf: (path: TypedPathKey[]) => () => pathToString(path)
 };
 
-type DefaultHandlers = typeof defaultHandlersConfig;
+export type DefaultHandlers = typeof defaultHandlersConfig;
 
 export type TypedPathHandlers<ConfigType extends TypedPathHandlersConfig> = {
     [key in keyof ConfigType]: ReturnType<ConfigType[key]>;
