@@ -27,6 +27,7 @@ export type TypedPathHandlersConfig = Record<
 
 const defaultHandlersConfig = {
     $path: (path: TypedPathKey[]) => pathToString(path),
+    $relativePath: (path: TypedPathKey[]) => path[path.length - 1],
     /**
      * @deprecated This method transforms all path chunks to strings.
      * If you need the path with numbers and Symbols - use $rawPath
