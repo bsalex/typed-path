@@ -2,14 +2,14 @@ export type TypedPathKey = string | symbol | number;
 
 function appendStringPathChunk(path: string, chunk: TypedPathKey): string {
     if (typeof chunk === 'number') {
-        return path + `[${chunk}]`;
+        return `${path}[${chunk}]`;
     } else {
         return appendStringSymbolChunkToPath(path, chunk);
     }
 }
 
 function appendStringSymbolChunkToPath(path: string, chunk: string | symbol) {
-    return path + (path === '' ? chunk.toString() : `.${chunk.toString()}`);
+    return `${path}${path === '' ? '' : '.'}${chunk.toString()}`;
 }
 
 function pathToString(path: TypedPathKey[]): string {
