@@ -34,9 +34,12 @@
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
     "tsdlint": "yarn build && tsd",
     "format": "prettier --parser typescript --write index.ts index.spec.ts",
+    "prepush": "yarn prepare",
+    "prepare": "yarn test && yarn build",
     "build": "tsc -p tsconfig.dist.json"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.4",
     "husky": "^0.13.1",
     "jest": "^29.6.4",
     "prettier": "2.2.0",

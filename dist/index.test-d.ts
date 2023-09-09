@@ -20,7 +20,7 @@ type TestType = {
 
 const testAdditionalHandlers = {
     $abs: (path: TypedPathKey[]) =>
-        typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
+        typedPath<TestType, TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
     $url: (path: TypedPathKey[]) => path.join('/'),
     $length: (path: TypedPathKey[]) => path.length
 };
@@ -42,5 +42,5 @@ expectError(typedPath<TestType>().a.W.c.$rawPath);
 
 
 // Types for additional handlers
-expectType<number>(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$length);
+expectType<number>(typedPath<TestType, TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$length);
 // Types for additional handlers

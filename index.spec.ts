@@ -23,7 +23,7 @@ interface OptionalThing {
 
 const testAdditionalHandlers = {
     $abs: (path: TypedPathKey[]) =>
-        typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
+        typedPath<TestType, TestType, typeof testAdditionalHandlers>(testAdditionalHandlers, ['', ...path]),
     $url: (path: TypedPathKey[]) => path.join('/')
 };
 
@@ -124,11 +124,11 @@ describe('Typed path', () => {
     });
 
     it('should work with extended handlers', () => {
-        expect(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$url).toEqual('a/b/c');
+        expect(typedPath<TestType, TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$url).toEqual('a/b/c');
     });
 
     it('should work with chained extended handlers', () => {
-        expect(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual(
+        expect(typedPath<TestType, TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$abs.$url).toEqual(
             '/a/b/c'
         );
     });
