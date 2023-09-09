@@ -34,8 +34,6 @@
     "lint": "tslint 'src/**/*.ts' 'src/**/*.tsx'",
     "tsdlint": "yarn build && tsd",
     "format": "prettier --parser typescript --write index.ts index.spec.ts",
-    "prepush": "yarn prepare",
-    "prepare": "yarn test && yarn build",
     "build": "tsc -p tsconfig.dist.json"
   },
   "devDependencies": {
