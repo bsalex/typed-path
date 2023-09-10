@@ -44,3 +44,18 @@ expectError(typedPath<TestType>().a.W.c.$rawPath);
 // Types for additional handlers
 expectType<number>(typedPath<TestType, typeof testAdditionalHandlers>(testAdditionalHandlers).a.b.c.$length);
 // Types for additional handlers
+
+// Types for root handlers
+function getTestAdditionalHandlers<RootType>() {
+    return {
+        $rootType: () => ({} as RootType),
+    }
+};
+
+expectType<TestType>(
+    typedPath<
+        TestType, 
+        ReturnType<typeof getTestAdditionalHandlers<TestType>>
+    >(getTestAdditionalHandlers()).a.b.c.$rootType
+);
+// Types for root handlers
